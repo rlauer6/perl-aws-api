@@ -105,6 +105,6 @@ sudo yum install -y rpm-build
 mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SPECS,SOURCES,SRPMS}
 echo -e "%_topdir ~/rpmbuild" > ~/.rpmmacros
 git clone https://github.com/rlauer6/perl-aws-api.git
-cd perl-amazon-api
-rpmbuild -bb perl-amazon-api.spec
+cd perl-aws-api
+rpmbuild -bb perl-aws-api.spec
 ```
