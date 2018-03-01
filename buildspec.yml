@@ -7,7 +7,7 @@ phases:
   install:
     commands:
       - yum update -y
-      - yum install util-linux rpm-build tree
+      - yum install -y util-linux rpm-build tree
   pre_build:
     commands:
       - mkdir /root/rpmbuild
