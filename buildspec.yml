@@ -1,0 +1,29 @@
+version: 0.1
+
+environment_variables:
+  plaintext:
+    PATH: "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+phases:
+  install:
+    commands:
+      - yum update -y
+      - yum install util-linux rpm-build tree
+  pre_build:
+    commands:
+      - mkdir /root/rpmbuild
+      - echo -e "%_topdir /root/rpmbuild" > /root/.rpmmacros
+  build:
+    commands:
+      - env
+      - rpmbuild -bb perl-aws-api.spec
+      - echo "perl-aws-api" > package-name
+      - test -e target-repo && mkdir /root/repo
+      - find ~/rpmbuild/RPMS/ -name '*.rpm' | sed 's|/root/rpmbuild/RPMS/||' > "/root/repo/$(cat package-name).lst"
+      - test -e target-repo && cp target-repo "/root/repo/$(cat package-name).repo"
+      - tree /root
+      - cat /root/repo/$(cat package-name).lst
+artifacts:
+  discard-paths: yes
+  files:
+    - /root/rpmbuild/RPMS/**/*
+    - /root/repo/*
